@@ -1,0 +1,161 @@
+/* ========== CONTACT PAGE ========== */
+div.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+}
+
+/* Contact Info Cards */
+div.main>div:not(.form) {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 24px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+div.main>div:not(.form):hover {
+    border-color: rgba(240, 165, 0, 0.3);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+div.main>div:not(.form) p {
+    color: #d4c5b0;
+    font-size: 1.05rem;
+    line-height: 1.8rem;
+    margin: 6px 0;
+}
+
+div.main>div:not(.form) p:first-child {
+    color: #f5e6d3;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+div.main>div:not(.form) p:first-child::before {
+    content: '📍 ';
+}
+
+div.main>div:nth-child(2) p:first-child::before {
+    content: '📞 ';
+}
+
+/* Form */
+div.form {
+    grid-column: 1 / -1;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+div.form form {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px 20px;
+}
+
+div.form form label {
+    color: #d4c5b0;
+    font-size: 1.05rem;
+    align-self: center;
+}
+
+div.form form input,
+div.form form textarea {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #f5e6d3;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+}
+
+div.form form input::placeholder,
+div.form form textarea::placeholder {
+    color: #6b5a4a;
+}
+
+div.form form input:focus,
+div.form form textarea:focus {
+    outline: none;
+    border-color: #f0a500;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(240, 165, 0, 0.1);
+}
+
+div.form form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+div.form form textarea {
+    grid-column: 2;
+}
+
+div.form form button.submit {
+    grid-column: 2;
+    padding: 14px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f0a500, #e67e22);
+    border: none;
+    border-radius: 60px;
+    color: #1a0a0a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    justify-self: start;
+    box-shadow: 0 4px 20px rgba(240, 165, 0, 0.3);
+}
+
+div.form form button.submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(240, 165, 0, 0.5);
+}
+
+div.form form button.submit:active {
+    transform: scale(0.97);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    div.main {
+        grid-template-columns: 1fr;
+        padding: 10px 20px;
+        gap: 20px;
+    }
+
+    div.form {
+        padding: 20px;
+    }
+
+    div.form form {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    div.form form label {
+        margin-top: 8px;
+    }
+
+    div.form form textarea {
+        grid-column: 1;
+    }
+
+    div.form form button.submit {
+        grid-column: 1;
+        justify-self: stretch;
+        text-align: center;
+    }
+
+    div.main>div:not(.form) {
+        padding: 18px 20px;
+    }
+}

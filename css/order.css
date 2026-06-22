@@ -1,0 +1,155 @@
+/* ========== ORDER PAGE ========== */
+div.main {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    gap: 40px;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    align-items: flex-start;
+}
+
+div.main>div {
+    flex: 1 1 45%;
+    min-width: 300px;
+}
+
+/* ========== RIGHT (FORM) ========== */
+div.main div.right h2 {
+    color: #f5e6d3;
+    padding: 0 0 10px;
+    margin: 0;
+}
+
+div.main div.right h2:last-of-type {
+    color: #f0a500;
+    font-size: 1.8rem;
+}
+
+/* Order Form */
+form.order_form {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px 20px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+form.order_form label {
+    color: #d4c5b0;
+    font-size: 1.1rem;
+    align-self: center;
+}
+
+form.order_form input {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #f5e6d3;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+form.order_form input::placeholder {
+    color: #6b5a4a;
+}
+
+form.order_form input:focus {
+    outline: none;
+    border-color: #f0a500;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(240, 165, 0, 0.1);
+}
+
+form.order_form input[type="email"] {
+    direction: ltr;
+}
+
+form.order_form input[type="tel"],
+form.order_form input[type="number"] {
+    text-align: center;
+}
+
+/* Submit Button */
+form.order_form input[type="submit"] {
+    grid-column: 1 / -1;
+    padding: 16px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f0a500, #e67e22);
+    border: none;
+    border-radius: 60px;
+    color: #1a0a0a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 20px rgba(240, 165, 0, 0.3);
+}
+
+form.order_form input[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(240, 165, 0, 0.5);
+}
+
+form.order_form input[type="submit"]:active {
+    transform: scale(0.97);
+}
+
+/* ========== LEFT (IMAGE) ========== */
+div.main div.left img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(240, 165, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+div.main div.left img:hover {
+    transform: scale(1.02);
+    border-color: #f0a500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    div.main {
+        flex-direction: column-reverse;
+        padding: 10px 20px;
+        gap: 20px;
+    }
+
+    div.main>div {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    form.order_form {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    form.order_form label {
+        margin-top: 8px;
+    }
+
+    form.order_form input[type="submit"] {
+        margin-top: 10px;
+    }
+
+    div.main div.left img {
+        max-width: 100%;
+    }
+
+    div.main div.right h2 {
+        font-size: 1.4rem;
+    }
+}
