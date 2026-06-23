@@ -1,8 +1,12 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 
 class FoodType(models.Model):
     title = models.CharField(max_length=255) 
+
+    def __str__(self):
+        return f'{self.title}'
 
 
 class Food(models.Model):
@@ -24,3 +28,12 @@ class ContactUs(models.Model):
     email = models.EmailField(max_length=254)
     phone_number =  models.CharField(max_length=11, blank=True)
     text = models.TextField()  
+
+class Order(models.Model):
+    name = models.CharField(max_length=50)
+    phone_number =  models.CharField(max_length=11, validators=[MinLengthValidator(11, 'wrong number')])
+    email = models.EmailField(max_length=254, blank=True)
+    amount = models.PositiveIntegerField()
+
+    
+
