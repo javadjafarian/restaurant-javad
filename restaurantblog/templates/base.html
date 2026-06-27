@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}رستوران جواد{% endblock title %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'imgs/logo/logo.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        /* ============================================
+           ریست و فونت
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
+            background: #fcf9f5;
+            color: #2d1b0e;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ============================================
+           Topbar
+        ============================================ */
+        .topbar {
+            background: #2d1b0e;
+            color: #fff;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .topbar span {
+            margin: 0 10px;
+        }
+
+        /* ============================================
+           Header
+        ============================================ */
+        .site-header {
+            background: #fff;
+            padding: 12px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .site-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2d1b0e;
+        }
+
+        .site-brand img {
+            height: 45px;
+            width: auto;
+        }
+
+        .site-brand h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+        }
+
+        .site-brand h1 span {
+            color: #c0392b;
+        }
+
+        /* ============================================
+           منوی اصلی
+        ============================================ */
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+
+        .main-nav ul li a {
+            display: block;
+            padding: 8px 14px;
+            color: #2d1b0e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .main-nav ul li a:hover {
+            background: #c0392b;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .main-nav ul li a.active {
+            background: #c0392b;
+            color: #fff;
+        }
+
+        /* ============================================
+           همبرگر
+        ============================================ */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: #2d1b0e;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* ============================================
+           ریسپانسیو
+        ============================================ */
+        @media (max-width: 992px) {
+            .topbar {
+                font-size: 0.75rem;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .main-nav ul li a {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .main-nav {
+                display: none;
+                width: 100%;
+                order: 3;
+            }
+
+            .main-nav.open {
+                display: block;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                padding: 15px 0;
+                gap: 0;
+            }
+
+            .main-nav ul li a {
+                padding: 12px 16px;
+                border-bottom: 1px solid #f0f0f0;
+                font-size: 1rem;
+                white-space: normal;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .site-brand h1 {
+                font-size: 1.3rem;
+            }
+
+            .site-brand img {
+                height: 35px;
+            }
+
+            .topbar span {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar span {
+                font-size: 0.65rem;
+                margin: 0 5px;
+            }
+
+            .site-brand h1 {
+                font-size: 1.1rem;
+            }
+
+            .site-brand img {
+                height: 30px;
+            }
+        }
+
+        /* ============================================
+           فوتر
+        ============================================ */
+        .site-footer {
+            background: #2d1b0e;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-grid h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #f1c40f;
+        }
+
+        .footer-grid p {
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: #f1c40f;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-icons a img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a img:hover {
+            transform: scale(1.1);
+        }
+
+        .note-box {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #c0392b;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 3px 15px rgba(192, 57, 43, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top:hover {
+            background: #a93226;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body id="top">
+    <div class="page-shell">
+        <!-- Topbar -->
+        <div class="topbar container">
+            <span>🍽️ تجربه‌ای تازه از غذای ایرانی و جهانی</span>
+            <span>⏰ سفارش آنلاین، آماده‌سازی سریع، تحویل رایگان</span>
+        </div>
+
+        <!-- Header -->
+        <header class="site-header">
+            <div class="container header-content">
+                <a href="/" class="site-brand">
+                    <img src="{% static 'imgs/logo/logo.ico' %}" alt="لوگو رستوران" />
+                    <h1>رستوران <span>جواد</span></h1>
+                </a>
+
+                <button class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav class="main-nav" id="mainNav">
+                    <ul>
+                        <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">خانه</a></li>
+                        <li><a href="/breakfast/" class="{% if request.path == '/breakfast/' %}active{% endif %}">صبحانه</a></li>
+                        <li><a href="/lunch/" class="{% if request.path == '/lunch/' %}active{% endif %}">ناهار</a></li>
+                        <li><a href="/dinner/" class="{% if request.path == '/dinner/' %}active{% endif %}">شام</a></li>
+                        <li><a href="/fastfood/" class="{% if request.path == '/fastfood/' %}active{% endif %}">فست‌فود</a></li>
+                        <li><a href="/persianfood/" class="{% if request.path == '/persianfood/' %}active{% endif %}">ایرانی</a></li>
+                        <li><a href="/drinks/" class="{% if request.path == '/drinks/' %}active{% endif %}">نوشیدنی</a></li>
+                        <li><a href="/about-us/" class="{% if request.path == '/about-us/' %}active{% endif %}">درباره ما</a></li>
+                        <li><a href="/contact-us/" class="{% if request.path == '/contact-us/' %}active{% endif %}">تماس با ما</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- محتوای اصلی -->
+        <main>
+            {% block content %}{% endblock content %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <h4>رستوران جواد - طعم نو، خاطره قدیمی</h4>
+                        <p>سفره‌ای از غذاهای سنتی و نوآورانه برای مهمانان عزیز. هر پرس یک تجربه جدید، هر لقمه یک تاریخچه خوشمزه.</p>
+                        <div class="footer-links">
+                            <a href="/breakfast/">صبحانه</a>
+                            <a href="/lunch/">ناهار</a>
+                            <a href="/dinner/">شام</a>
+                            <a href="/fastfood/">فست‌فود</a>
+                            <a href="/persianfood/">ایرانی</a>
+                            <a href="/drinks/">نوشیدنی</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>ارتباط با ما</h4>
+                        <p>✉️ jawad.jafarian@gmail.com</p>
+                        <div class="social-icons">
+                            <a href="#"><img src="{% static 'imgs/social_media/instagram.png' %}" alt="اینستاگرام" /></a>
+                            <a href="#"><img src="{% static 'imgs/social_media/telegram.png' %}" alt="تلگرام" /></a>
+                            <a href="#"><img src="{% static 'imgs/social_media/youtube.png' %}" alt="یوتیوب" /></a>
+                            <a href="#"><img src="{% static 'imgs/social_media/facebook.png' %}" alt="فیسبوک" /></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="note-box">
+                    <p>تمامی صفحات با طراحی جدید اجرا شده‌اند تا تجربه‌ای زیبا و ساده برای مشتریان شما فراهم شود.</p>
+                </div>
+            </div>
+        </footer>
+
+        <a class="back-to-top" href="#top"><i class="fa fa-arrow-up"></i></a>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('open');
+        }
+
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mainNav').classList.remove('open');
+            });
+        });
+    </script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+
+</html>

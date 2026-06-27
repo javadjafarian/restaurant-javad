@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}منوی نوشیدنی - رستوران جواد{% endblock title %}
+{% block active_drinks %}active{% endblock active_drinks %}
+
+{% block content %}
+<section class="page-section container">
+    <div class="section-title">
+        <h3>نوشیدنی‌های خنک و گرم برای هر لحظه</h3>
+        <span>نوشیدنی‌های ما از قهوه‌های ویژه تا نوشیدنی‌های خنک فصل را پوشش می‌دهد.</span>
+    </div>
+    <div class="menu-grid">
+        <article class="menu-card">
+            <img src="{% static 'imgs/ghahverh/6.jpg' %}" alt="کافه لاته" />
+            <div class="menu-card-body">
+                <h4>کافه لاته</h4>
+                <p>قهوه با شیر گرم و فوم مخملی</p>
+                <span class="card-tag">گرم</span>
+                <div class="price">75000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/ghahverh/6.jpg' %}" alt="لیموناد نعنا" />
+            <div class="menu-card-body">
+                <h4>لیموناد نعنا</h4>
+                <p>لیموناد خنک با برگ نعنا تازه</p>
+                <span class="card-tag">خنک</span>
+                <div class="price">52000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/ghahverh/6.jpg' %}" alt="چای زعفرانی" />
+            <div class="menu-card-body">
+                <h4>چای زعفرانی</h4>
+                <p>چای ایرانی خوش‌عطر با زعفران طبیعی</p>
+                <span class="card-tag">سنتی</span>
+                <div class="price">45000 تومان</div>
+            </div>
+        </article>
+    </div>
+</section>
+<section class="page-section container">
+    <div class="section-block">
+        <h3>سفارش سریع</h3>
+        <p>برای ثبت سفارش روی هر غذا کلیک کنید و اطلاعات خود را در صفحه سفارش وارد نمایید. غذاهای ما با بهترین کیفیت و بسته‌بندی شیک ارسال می‌شوند.</p>
+        <p>اگر نیاز به مشاوره دارید، از صفحه تماس با ما استفاده کنید.</p>
+    </div>
+</section>
+{% endblock content %}

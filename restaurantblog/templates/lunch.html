@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}منوی ناهار - رستوران جواد{% endblock title %}
+{% block active_lunch %}active{% endblock active_lunch %}
+
+{% block content %}
+<section class="page-section container">
+    <div class="section-title">
+        <h3>ناهارهای مقوی و تازه برای انرژی روزانه</h3>
+        <span>گزینه‌های ناهار ما شامل غذاهای ایرانی، فست‌فود و خوراک‌های مخصوص است تا هر ذائقه‌ای را راضی کند.</span>
+    </div>
+    <div class="menu-grid">
+        <article class="menu-card">
+            <img src="{% static 'imgs/pizza/2.jpg' %}" alt="پیتزا مرغ و سبزیجات" />
+            <div class="menu-card-body">
+                <h4>پیتزا مرغ و سبزیجات</h4>
+                <p>پیتزای اختصاصی با مرغ تازه و سس مخصوص</p>
+                <span class="card-tag">پیشنهاد ناهار</span>
+                <div class="price">150000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/kebab/3.jpg' %}" alt="کباب کوبیده ویژه" />
+            <div class="menu-card-body">
+                <h4>کباب کوبیده ویژه</h4>
+                <p>دو سیخ کباب با برنج زعفرانی و گوجه کبابی</p>
+                <span class="card-tag">غذای ایرانی</span>
+                <div class="price">175000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/macaroni/3.jpg' %}" alt="ماکارونی با سس آلفردو" />
+            <div class="menu-card-body">
+                <h4>ماکارونی با سس آلفردو</h4>
+                <p>ماکارونی پاستا با سس خامه‌ای و قارچ</p>
+                <span class="card-tag">فست‌فود سبک</span>
+                <div class="price">130000 تومان</div>
+            </div>
+        </article>
+    </div>
+</section>
+<section class="page-section container">
+    <div class="section-block">
+        <h3>سفارش سریع</h3>
+        <p>برای ثبت سفارش روی هر غذا کلیک کنید و اطلاعات خود را در صفحه سفارش وارد نمایید. غذاهای ما با بهترین کیفیت و بسته‌بندی شیک ارسال می‌شوند.</p>
+        <p>اگر نیاز به مشاوره دارید، از صفحه تماس با ما استفاده کنید.</p>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}جزئیات غذا - رستوران جواد{% endblock title %}
+
+{% block content %}
+<section class="page-section container">
+    <div class="section-title">
+        <h3>جزییات غذا</h3>
+        <span>پیتزا املت و نعنا</span>
+    </div>
+    <div class="grid-two">
+        <article class="hero-card">
+            <img src="{% static 'imgs/pizza/2.jpg' %}" alt="پیتزا املت و نعنا" />
+            <div class="hero-card-body">
+                <h3>پیتزای اختصاصی جواد</h3>
+                <p>ترکیبی از پنیرهای خوش‌طعم، املت تازه، نعنا و سس مخصوص. پیتزایی با بافت ترد و عطر بی‌نظیر.</p>
+            </div>
+        </article>
+        <div class="section-block">
+            <h4>ویژگی‌ها</h4>
+            <ul class="list-with-icons">
+                <li>پیتزا با نان دست‌ساز</li>
+                <li>کاهش چربی و طعم تازه</li>
+                <li>مناسب برای سفارش خانوادگی</li>
+                <li>ارسال سریع و بسته‌بندی شیک</li>
+            </ul>
+            <div class="price">112000 تومان</div>
+            <div class="hero-actions" style="margin-top: 22px;">
+                <a href="order.html" class="btn btn-primary"><i class="fa fa-check-circle"></i> سفارش این غذا</a>
+                <a href="persian.html" class="button-link btn-secondary"><i class="fa fa-angle-right"></i> بازگشت به منو</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

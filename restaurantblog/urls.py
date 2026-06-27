@@ -2,13 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.Home.as_view(), name='home'),
-    path('breakfast/',views.Brakefast.as_view(), name='breakfast'),
-    path('dinner/',views.Brakefast.as_view(), name='dinner'),
-    path('lunch/',views.Brakefast.as_view(), name='lunch'),
-    path('drinks/',views.Brakefast.as_view(), name='drinks'),
-    path('fastfood/',views.Brakefast.as_view(), name='fastfood'),
-    path('persianfood/',views.Brakefast.as_view(), name='persianfood'),
-    path('about-us/',views.Brakefast.as_view(), name='about-us'),
-    path('contact-us/',views.Brakefast.as_view(), name='contact-us'),
+    path('', views.Home.as_view(), name='home'),
+    # path('breakfast/', views.Breakfast.as_view(), name='breakfast'),
+    # path('lunch/', views.Lunch.as_view(), name='lunch'),
+    # path('dinner/', views.Dinner.as_view(), name='dinner'),
+    # path('fastfood/', views.FastFood.as_view(), name='fastfood'),
+    # path('persianfood/', views.PersianFood.as_view(), name='persianfood'),
+    # path('drinks/', views.Drinks.as_view(), name='drinks'),
+    # path('about-us/', views.AboutUs.as_view(), name='about-us'),
+    # path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
+    # path('order/', views.OrderView.as_view(), name='order'),
 ]

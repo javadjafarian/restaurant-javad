@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}منوی صبحانه - رستوران جواد{% endblock title %}
+{% block active_breakfast %}active{% endblock active_breakfast %}
+
+{% block content %}
+<section class="page-section container">
+    <div class="section-title">
+        <h3>صبحانه‌های خاص برای شروع روز شما</h3>
+        <span>صبح خود را با صبحانه‌های تازه و گرم ما آغاز کنید؛ انتخاب‌های سالم، سنتی و مدرن با چاشنی عشق.</span>
+    </div>
+    <div class="menu-grid">
+        <article class="menu-card">
+            <img src="{% static 'imgs/omlet/3.jpg' %}" alt="صبحانه مخلوط جواد" />
+            <div class="menu-card-body">
+                <h4>صبحانه مخلوط جواد</h4>
+                <p>نان سنگک، عسل، پنیر محلی و سبزی تازه</p>
+                <span class="card-tag">صبحانه ویژه</span>
+                <div class="price">120000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/omlet/3.jpg' %}" alt="املت سبزیجات" />
+            <div class="menu-card-body">
+                <h4>املت سبزیجات</h4>
+                <p>تخم مرغ، اسفناج، گوجه و پنیر پیتزا</p>
+                <span class="card-tag">پر انرژی</span>
+                <div class="price">95000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/ghahverh/6.jpg' %}" alt="کروسان شکلاتی" />
+            <div class="menu-card-body">
+                <h4>کروسان شکلاتی</h4>
+                <p>کره‌ای، ترد و با فیلینگ شکلاتی دست‌ساز</p>
+                <span class="card-tag">شیرین</span>
+                <div class="price">85000 تومان</div>
+            </div>
+        </article>
+    </div>
+</section>
+<section class="page-section container">
+    <div class="section-block">
+        <h3>سفارش سریع</h3>
+        <p>برای ثبت سفارش روی هر غذا کلیک کنید و اطلاعات خود را در صفحه سفارش وارد نمایید. غذاهای ما با بهترین کیفیت و بسته‌بندی شیک ارسال می‌شوند.</p>
+        <p>اگر نیاز به مشاوره دارید، از صفحه تماس با ما استفاده کنید.</p>
+    </div>
+</section>
+{% endblock content %}

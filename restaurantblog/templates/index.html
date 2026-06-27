@@ -1,0 +1,544 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}خانه - رستوران جواد{% endblock title %}
+
+{% block extra_css %}
+<style>
+    /* ============================================
+       هیرو
+    ============================================ */
+    .hero-section {
+        background: linear-gradient(135deg, #2d1b0e 0%, #4a2c1a 100%);
+        padding: 60px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 50px;
+        color: #fff;
+    }
+
+    .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .hero-text h1 span {
+        color: #f1c40f;
+    }
+
+    .hero-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        opacity: 0.9;
+        margin-bottom: 25px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background: #c0392b;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background: #a93226;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(192, 57, 43, 0.4);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        transform: translateY(-3px);
+    }
+
+    .hero-image img {
+        width: 100%;
+        max-height: 350px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: #f1c40f;
+        color: #2d1b0e;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: bold;
+        margin-top: 15px;
+        font-size: 0.9rem;
+    }
+
+    /* ============================================
+       لیست غذاها
+    ============================================ */
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+        font-size: 2.5rem;
+        color: #2d1b0e;
+        margin-bottom: 10px;
+    }
+
+    .section-title p {
+        color: #7a5f4b;
+        font-size: 1.1rem;
+    }
+
+    .foods-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .food-card {
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .food-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .food-image {
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .food-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .food-card:hover .food-image img {
+        transform: scale(1.05);
+    }
+
+    .food-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #c0392b;
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .food-body {
+        padding: 20px;
+    }
+
+    .food-body h3 {
+        font-size: 1.3rem;
+        color: #2d1b0e;
+        margin-bottom: 8px;
+    }
+
+    .food-body .food-price {
+        color: #c0392b;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .food-body .food-old-price {
+        color: #999;
+        font-size: 1rem;
+        text-decoration: line-through;
+        margin-right: 10px;
+    }
+
+    .food-body .food-discount {
+        background: #f1c40f;
+        color: #2d1b0e;
+        padding: 2px 10px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .food-body p {
+        color: #7a5f4b;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+
+    .food-body .food-meta {
+        display: flex;
+        gap: 15px;
+        font-size: 0.85rem;
+        color: #7a5f4b;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .food-body .food-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .food-link {
+        display: inline-block;
+        color: #c0392b;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .food-link:hover {
+        color: #a93226;
+        transform: translateX(-5px);
+    }
+
+    /* ============================================
+       امکانات
+    ============================================ */
+    .features-section {
+        background: #f8f4e8;
+        padding: 50px 0;
+        border-radius: 30px;
+        margin: 50px 0;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .feature-item h4 {
+        color: #2d1b0e;
+        margin-bottom: 5px;
+    }
+
+    .feature-item p {
+        color: #7a5f4b;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* ============================================
+       پیشنهاد ویژه
+    ============================================ */
+    .offer-banner {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        padding: 50px 30px;
+        border-radius: 30px;
+        text-align: center;
+        color: #fff;
+        margin: 50px 0;
+    }
+
+    .offer-banner h3 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+
+    .offer-banner p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        opacity: 0.95;
+    }
+
+    .offer-banner .btn {
+        background: #fff;
+        color: #c0392b;
+        font-size: 1.1rem;
+        padding: 15px 40px;
+    }
+
+    .offer-banner .btn:hover {
+        background: #f8f4e8;
+        transform: scale(1.05);
+    }
+
+    /* ============================================
+       خالی بودن لیست
+    ============================================ */
+    .empty-message {
+        text-align: center;
+        padding: 60px 20px;
+        color: #7a5f4b;
+        font-size: 1.2rem;
+    }
+
+    .empty-message i {
+        font-size: 4rem;
+        display: block;
+        margin-bottom: 20px;
+        color: #ccc;
+    }
+
+    /* ============================================
+       ریسپانسیو
+    ============================================ */
+    @media (max-width: 992px) {
+        .hero-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .hero-buttons {
+            justify-content: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+        }
+
+        .foods-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-text h1 {
+            font-size: 2rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+        }
+
+        .foods-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .offer-banner h3 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .foods-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-text h1 {
+            font-size: 1.8rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<!-- ============================================
+     هیرو
+============================================ -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>به <span>رستوران جواد</span> خوش آمدید</h1>
+                <p>
+                    تجربه‌ای تازه از غذای ایرانی و جهانی با بهترین مواد اولیه،
+                    سرو سریع و محیطی دلنشین. سفارش آنلاین، تحویل رایگان.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/order/" class="btn btn-primary">
+                        <i class="fa fa-shopping-basket"></i> سفارش آنلاین
+                    </a>
+                    <a href="/contact-us/" class="btn btn-secondary">
+                        <i class="fa fa-phone"></i> تماس با ما
+                    </a>
+                </div>
+                <div class="hero-badge">🏆 پیشنهاد ویژه سرآشپز</div>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'imgs/pizza/2.jpg' %}" alt="غذای ویژه" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     لیست غذاها
+============================================ -->
+<section class="container">
+    <div class="section-title">
+        <h2>🍽️ منوی غذاها</h2>
+        <p>با بهترین غذاهای رستوران جواد آشنا شوید</p>
+    </div>
+
+    {% if foods %}
+    <div class="foods-grid">
+        {% for food in foods %}
+        <div class="food-card">
+            <div class="food-image">
+                <img src="{{ food.image.url }}" alt="{{ food.name }}" />
+                {% if food.old_price %}
+                <span class="food-badge">🔥 تخفیف ویژه</span>
+                {% endif %}
+            </div>
+            <div class="food-body">
+                <h3>{{ food.name }}</h3>
+                
+                <div class="food-price">
+                    {{ food.price }} تومان
+                    {% if food.old_price %}
+                    <span class="food-old-price">{{ food.old_price }} تومان</span>
+                    <span class="food-discount">
+                    </span>
+                    {% endif %}
+                </div>
+
+                <p>{{ food.description|truncatewords:20 }}</p>
+
+                <div class="food-meta">
+                    {% if food.weight %}
+                    <span>⚖️ {{ food.weight }} گرم</span>
+                    {% endif %}
+                    {% if food.length %}
+                    <span>⏱️ {{ food.length }} دقیقه</span>
+                    {% endif %}
+                    {% if food.ingredients %}
+                    <span>🧂 {{ food.ingredients|truncatewords:5 }}</span>
+                    {% endif %}
+                </div>
+
+                <a href="#" class="food-link">
+                    مشاهده جزئیات <i class="fa fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-message">
+        <i class="fa fa-utensils"></i>
+        <p>هنوز غذایی به منو اضافه نشده است!</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">به زودی غذاهای جدید اضافه می‌شوند.</p>
+    </div>
+    {% endif %}
+</section>
+
+<!-- ============================================
+     امکانات
+============================================ -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>چرا رستوران جواد؟</h2>
+            <p>ما به کیفیت و رضایت شما اهمیت می‌دهیم</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feature-icon">🚀</span>
+                <h4>سرو سریع</h4>
+                <p>آماده‌سازی و تحویل بی‌تأخیر</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🥘</span>
+                <h4>غذای تازه</h4>
+                <p>مواد اولیه تازه و مرغوب</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">💰</span>
+                <h4>قیمت معقول</h4>
+                <p>کیفیت عالی با قیمت مناسب</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🎯</span>
+                <h4>تحویل رایگان</h4>
+                <p>برای سفارش‌های بالای ۱۰۰ هزار</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">👨‍🍳</span>
+                <h4>سرآشپز ماهر</h4>
+                <p>تیم حرفه‌ای با تجربه</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">💚</span>
+                <h4>بهداشت کامل</h4>
+                <p>رعایت اصول بهداشتی</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     پیشنهاد ویژه
+============================================ -->
+<section class="container">
+    <div class="offer-banner">
+        <h3>🎁 پیشنهاد ویژه امروز</h3>
+        <p>
+            با سفارش بالای ۲۰۰ هزار تومان، <strong>یک نوشیدنی رایگان</strong> هدیه بگیرید!
+        </p>
+        <a href="/order/" class="btn">
+            <i class="fa fa-shopping-basket"></i> سفارش اکنون
+        </a>
+    </div>
+</section>
+{% endblock content %}

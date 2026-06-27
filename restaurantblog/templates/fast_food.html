@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}منوی فست‌فود - رستوران جواد{% endblock title %}
+{% block active_fast_food %}active{% endblock active_fast_food %}
+
+{% block content %}
+<section class="page-section container">
+    <div class="section-title">
+        <h3>فست‌فود تازه و ترد در هر سفارش</h3>
+        <span>فست‌فودهای ما با نان‌های تازه و سس‌های ویژه آماده شده‌اند تا هر لقمه انرژی‌بخش باشد.</span>
+    </div>
+    <div class="menu-grid">
+        <article class="menu-card">
+            <img src="{% static 'imgs/pizza/2.jpg' %}" alt="پیتزا املت و نعنا" />
+            <div class="menu-card-body">
+                <h4>پیتزا املت و نعنا</h4>
+                <p>پیتزای خاص با طعم املت و چاشنی نعنا</p>
+                <span class="card-tag">پرفروش</span>
+                <div class="price">112000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/ghahverh/6.jpg' %}" alt="برگر کلاسیک" />
+            <div class="menu-card-body">
+                <h4>برگر کلاسیک</h4>
+                <p>برگر با پنیر و سیب‌زمینی نیمه سرخ‌شده</p>
+                <span class="card-tag">مورد علاقه</span>
+                <div class="price">128000 تومان</div>
+            </div>
+        </article>
+        <article class="menu-card">
+            <img src="{% static 'imgs/kebab/3.jpg' %}" alt="ساندویچ چیکن اسپایسی" />
+            <div class="menu-card-body">
+                <h4>ساندویچ چیکن اسپایسی</h4>
+                <p>مرغ تند، کاهو و سس مخصوص</p>
+                <span class="card-tag">تند و خوش‌طعم</span>
+                <div class="price">103000 تومان</div>
+            </div>
+        </article>
+    </div>
+</section>
+<section class="page-section container">
+    <div class="section-block">
+        <h3>سفارش سریع</h3>
+        <p>برای ثبت سفارش روی هر غذا کلیک کنید و اطلاعات خود را در صفحه سفارش وارد نمایید. غذاهای ما با بهترین کیفیت و بسته‌بندی شیک ارسال می‌شوند.</p>
+        <p>اگر نیاز به مشاوره دارید، از صفحه تماس با ما استفاده کنید.</p>
+    </div>
+</section>
+{% endblock content %}
