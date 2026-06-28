@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load madval_persian_translation %}
+
+{% block title %}
+    شام - رستوران جواد
+{% endblock title %}
+
+{% block extra_css %}
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #f5f0f0, #f0e0e0);
+            padding: 50px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '🌙';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.08;
+            left: -30px;
+            bottom: -30px;
+            transform: rotate(-15deg);
+        }
+        
+        .page-hero::after {
+            content: '🍷';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.08;
+            right: -20px;
+            top: -20px;
+            transform: rotate(20deg);
+        }
+        
+        .page-hero h1 {
+            font-size: 3rem;
+            color: #2d1b0e;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-hero h1 span {
+            color: #8e44ad;
+        }
+        
+        .page-hero p {
+            font-size: 1.2rem;
+            color: #7a5f4b;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-hero .hero-badge {
+            display: inline-block;
+            background: #8e44ad;
+            color: #fff;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .foods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .food-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #f0ede8;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: #8e44ad;
+        }
+        
+        .food-card .card-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .food-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .food-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+        
+        .food-card .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f1c40f;
+            color: #2d1b0e;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .food-card .card-body {
+            padding: 20px;
+        }
+        
+        .food-card .card-body h3 {
+            font-size: 1.3rem;
+            color: #2d1b0e;
+            margin-bottom: 8px;
+        }
+        
+        .food-card .card-body .price {
+            color: #8e44ad;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .food-card .card-body .price .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            margin-right: 10px;
+            font-weight: normal;
+        }
+        
+        .food-card .card-body p {
+            color: #7a5f4b;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .food-card .card-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #7a5f4b;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .food-card .card-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f8f4e8;
+            padding: 3px 12px;
+            border-radius: 30px;
+        }
+        
+        .food-card .card-meta span i {
+            color: #8e44ad;
+        }
+        
+        .food-card .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .food-card .card-link:hover {
+            color: #6c3483;
+            transform: translateX(-5px);
+        }
+        
+        .food-types {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .food-types .type-tag {
+            background: #f0ede8;
+            color: #7a5f4b;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 80px 20px;
+            color: #7a5f4b;
+        }
+        
+        .empty-message i {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 20px;
+            color: #e0d5c8;
+        }
+        
+        .empty-message h3 {
+            font-size: 1.8rem;
+            color: #2d1b0e;
+            margin-bottom: 10px;
+        }
+        
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .quick-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 25px;
+            background: #fff;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #2d1b0e;
+            font-weight: 600;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border: 1px solid #f0ede8;
+        }
+        
+        .quick-links a:hover {
+            background: #8e44ad;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(142, 68, 173, 0.2);
+            border-color: #8e44ad;
+        }
+        
+        .quick-links a i {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-hero h1 {
+                font-size: 2.2rem;
+            }
+            .page-hero p {
+                font-size: 1rem;
+            }
+            .foods-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .foods-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-hero h1 {
+                font-size: 1.8rem;
+            }
+            .quick-links a {
+                padding: 8px 18px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <!-- هیرو -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>🌙 <span>شام</span> ویژه</h1>
+            <p>غذاهای لذیذ و مجلسی برای یک شام به‌یادماندنی</p>
+            <span class="hero-badge">🍷 بهترین شام‌های شهر</span>
+        </div>
+    </section>
+
+    <!-- لیست غذاها -->
+    <section class="container">
+        <div class="section-title">
+            <h2>🍲 منوی شام</h2>
+            <p>انتخاب کنید و یک شام عالی را تجربه کنید</p>
+        </div>
+
+        {% if foods %}
+            <div class="foods-grid">
+                {% for food in foods %}
+                    <div class="food-card">
+                        <div class="card-image">
+                            {% if food.image %}
+                                <img src="{{ food.image.url }}" alt="{{ food.name|pn }}" />
+                            {% else %}
+                                <img src="{% static 'imgs/default.jpg' %}" alt="{{ food.name|pn }}" />
+                            {% endif %}
+                            
+                            {% if food.old_price %}
+                                <span class="card-badge">🔥 تخفیف ویژه</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-body">
+                            <h3>{{ food.name|pn }}</h3>
+                            
+                            <div class="price">
+                                {{ food.price|cspn }} تومان
+                                {% if food.old_price %}
+                                    <span class="old-price">{{ food.old_price|cspn }} تومان</span>
+                                {% endif %}
+                            </div>
+                            
+                            <p>{{ food.description|truncatewords:18|pn }}</p>
+                            
+                            {% if food.food_types.all %}
+                                <div class="food-types">
+                                    {% for type in food.food_types.all %}
+                                        <span class="type-tag">{{ type.title|pn }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="card-meta">
+                                {% if food.weight %}
+                                    <span><i class="fa fa-weight-hanging"></i> {{ food.weight|pn }} گرم</span>
+                                {% endif %}
+                                {% if food.length %}
+                                    <span><i class="fa fa-clock-o"></i> {{ food.length|pn }} دقیقه</span>
+                                {% endif %}
+                                {% if food.ingredients %}
+                                    <span><i class="fa fa-cutlery"></i> {{ food.ingredients|truncatewords:3|pn }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <a href="{{ food.get_absolute_url }}" class="card-link">
+                                مشاهده جزئیات <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-message">
+                <i class="fa fa-utensils"></i>
+                <h3>هیچ غذایی در منوی شام وجود ندارد!</h3>
+                <p>به زودی غذاهای خوشمزه‌ای به منو اضافه می‌شوند.</p>
+                <div class="quick-links">
+                    <a href="/breakfast/"><i class="fa fa-coffee"></i> صبحانه</a>
+                    <a href="/lunch/"><i class="fa fa-utensils"></i> ناهار</a>
+                    <a href="/"><i class="fa fa-home"></i> صفحه اصلی</a>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    <!-- پیشنهاد ویژه -->
+    <section class="container" style="margin-top: 40px;">
+        <div style="background: linear-gradient(135deg, #f5f0f0, #f0e0e0); padding: 40px 30px; border-radius: 30px; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🍷</div>
+            <h3 style="font-size: 2rem; color: #2d1b0e; margin-bottom: 10px;">
+                شام مجلسی + <span style="color: #8e44ad;">دسر</span> ویژه
+            </h3>
+            <p style="font-size: 1.1rem; color: #7a5f4b; margin-bottom: 20px;">
+                با سفارش هر شام، یک دسر خوشمزه <strong>هدیه</strong> بگیرید!
+            </p>
+            <a href="/order/" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 40px; background: #8e44ad;">
+                <i class="fa fa-shopping-basket"></i> سفارش اکنون
+            </a>
+        </div>
+    </section>
+{% endblock content %}
