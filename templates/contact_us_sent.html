@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    پیام ارسال شد - رستوران جواد
+{% endblock title %}
+
+{% block extra_css %}
+    <style>
+        .success-page {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        
+        .success-box {
+            background: #fff;
+            padding: 60px 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid #f0ede8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .success-box::before {
+            content: '✅';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.03;
+            top: -50px;
+            right: -50px;
+            transform: rotate(15deg);
+        }
+        
+        .success-box .icon-wrapper {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .icon-wrapper i {
+            font-size: 3.5rem;
+            color: #fff;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(39, 174, 96, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+            }
+        }
+        
+        .success-box h2 {
+            color: #2d1b0e;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box h2 span {
+            color: #27ae60;
+        }
+        
+        .success-box .subtitle {
+            color: #7a5f4b;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .message {
+            color: #5a3f2b;
+            font-size: 1rem;
+            line-height: 1.9;
+            margin: 15px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .message strong {
+            color: #c0392b;
+        }
+        
+        .success-box .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #27ae60, #f1c40f);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .info-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .info-item {
+            background: #f8f4e8;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .success-box .info-item i {
+            font-size: 1.5rem;
+            color: #c0392b;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .success-box .info-item span {
+            color: #7a5f4b;
+            font-size: 0.9rem;
+        }
+        
+        .success-box .info-item strong {
+            color: #2d1b0e;
+            display: block;
+            font-size: 1rem;
+        }
+        
+        .success-box .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .success-box .btn-primary {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.3);
+        }
+        
+        .success-box .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.4);
+        }
+        
+        .success-box .btn-secondary {
+            background: #f8f4e8;
+            color: #2d1b0e;
+            border: 2px solid #f0ede8;
+        }
+        
+        .success-box .btn-secondary:hover {
+            background: #2d1b0e;
+            color: #fff;
+            border-color: #2d1b0e;
+            transform: translateY(-3px);
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .success-box {
+                padding: 40px 25px;
+            }
+            
+            .success-box h2 {
+                font-size: 2rem;
+            }
+            
+            .success-box .icon-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .success-box .icon-wrapper i {
+                font-size: 2.8rem;
+            }
+            
+            .success-box .info-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .success-box .btn-group {
+                flex-direction: column;
+            }
+            
+            .success-box .btn {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .success-box h2 {
+                font-size: 1.6rem;
+            }
+            
+            .success-box .subtitle {
+                font-size: 1rem;
+            }
+            
+            .success-box .message {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <section class="container">
+        <div class="success-page">
+            <div class="success-box">
+                <!-- آیکون -->
+                <div class="icon-wrapper">
+                    <i class="fa fa-check"></i>
+                </div>
+                
+                <!-- عنوان -->
+                <h2>پیام شما <span>ارسال شد!</span></h2>
+                <p class="subtitle">✅ با موفقیت دریافت شد</p>
+                
+                <div class="divider"></div>
+                
+                <!-- پیام -->
+                <p class="message">
+                    از شما متشکریم که با <strong>رستوران جواد</strong> تماس گرفتید.
+                    پیام شما با موفقیت دریافت شد و در اسرع وقت (حداکثر ۲۴ ساعت)
+                    پاسخ داده خواهد شد.
+                </p>
+                
+                <!-- اطلاعات تماس -->
+                <div class="info-items">
+                    <div class="info-item">
+                        <i class="fa fa-clock-o"></i>
+                        <strong>زمان پاسخ</strong>
+                        <span>حداکثر ۲۴ ساعت</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa fa-phone"></i>
+                        <strong>تماس فوری</strong>
+                        <span>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                    </div>
+                </div>
+                
+                <!-- دکمه‌ها -->
+                <div class="btn-group">
+                    <a href="/" class="btn btn-primary">
+                        <i class="fa fa-home"></i> بازگشت به خانه
+                    </a>
+                    <a href="/contact-us/" class="btn btn-secondary">
+                        <i class="fa fa-envelope"></i> پیام جدید
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

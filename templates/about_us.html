@@ -1,0 +1,502 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load madval_persian_translation %}
+
+{% block title %}
+    درباره ما - رستوران جواد
+{% endblock title %}
+
+{% block extra_css %}
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #2d1b0e, #4a2c1a);
+            padding: 60px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '🍽️';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.05;
+            left: -50px;
+            bottom: -50px;
+            transform: rotate(-15deg);
+        }
+        
+        .about-hero::after {
+            content: '👨‍🍳';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.05;
+            right: -30px;
+            top: -30px;
+            transform: rotate(15deg);
+        }
+        
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-hero h1 span {
+            color: #f1c40f;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: 2.2rem;
+            color: #2d1b0e;
+            margin-bottom: 20px;
+        }
+        
+        .about-text h2 span {
+            color: #c0392b;
+        }
+        
+        .about-text p {
+            color: #7a5f4b;
+            line-height: 2;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+        }
+        
+        .about-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .about-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* ===== بخش ویژگی‌ها ===== */
+        .features-section {
+            background: #f8f4e8;
+            padding: 60px 0;
+            border-radius: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: #fff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-item .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h4 {
+            color: #2d1b0e;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .feature-item p {
+            color: #7a5f4b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* ===== بخش تیم (بدون آواتار) ===== */
+        .team-section {
+            margin-bottom: 50px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #f0ede8;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: #c0392b;
+        }
+        
+        .team-member .emoji-avatar {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 15px;
+            background: #f8f4e8;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover .emoji-avatar {
+            background: #c0392b;
+            transform: scale(1.1) rotate(-5deg);
+        }
+        
+        .team-member h4 {
+            color: #2d1b0e;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .team-member .role {
+            color: #c0392b;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .team-member p {
+            color: #7a5f4b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* ===== بخش تماس ===== */
+        .contact-section {
+            background: linear-gradient(135deg, #2d1b0e, #4a2c1a);
+            padding: 50px 30px;
+            border-radius: 30px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .contact-section h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .contact-section h3 span {
+            color: #f1c40f;
+        }
+        
+        .contact-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .contact-section .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 40px;
+            background: #f1c40f;
+            color: #2d1b0e;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-section .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.3);
+        }
+        
+        /* ===== آمار ===== */
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .stats .stat-item {
+            background: #f8f4e8;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 100px;
+            flex: 1;
+        }
+        
+        .stats .stat-item .number {
+            font-size: 2rem;
+            color: #c0392b;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stats .stat-item .label {
+            color: #7a5f4b;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .about-image img {
+                height: 300px;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-hero p {
+                font-size: 1rem;
+            }
+            
+            .about-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .contact-section h3 {
+                font-size: 1.6rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .about-image img {
+                height: 200px;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <!-- ===== هیرو ===== -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>درباره <span>رستوران جواد</span></h1>
+            <p>
+                سفره‌ای از طعم‌های اصیل و مدرن، جایی که هر لقمه داستانی از عشق به غذاست.
+                ما در رستوران جواد، هنر آشپزی را با کیفیت و تازگی ترکیب کرده‌ایم.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== محتوای اصلی ===== -->
+    <section class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>داستان <span>ما</span></h2>
+                <p>
+                    رستوران جواد با الهام از طعم‌های اصیل ایرانی و جهانی، در سال ۱۴۰۰ شروع به کار کرد. 
+                    هدف ما فراتر از یک غذای ساده است؛ ما به دنبال خلق لحظات به‌یادماندنی برای مهمانان عزیز هستیم.
+                </p>
+                <p>
+                    تیم ما متشکل از سرآشپزهای حرفه‌ای و با تجربه است که با عشق و اشتیاق، هر غذا را با بهترین 
+                    مواد اولیه و تازه‌ترین محصولات تهیه می‌کنند.
+                </p>
+                <p>
+                    ما به کیفیت، بهداشت و رضایت شما اهمیت می‌دهیم و همواره تلاش می‌کنیم تا تجربه‌ای بی‌نظیر 
+                    از غذا را برای شما به ارمغان بیاوریم.
+                </p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="number">۵+</span>
+                        <span class="label">سال تجربه</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="number">۱۵۰+</span>
+                        <span class="label">غذای متنوع</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="number">۱۰۰۰+</span>
+                        <span class="label">مشتری راضی</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ویژگی‌ها ===== -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>چرا <span style="color: #c0392b;">رستوران جواد</span>؟</h2>
+                <p>ما به کیفیت و رضایت شما اهمیت می‌دهیم</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🥘</span>
+                    <h4>غذای تازه و باکیفیت</h4>
+                    <p>استفاده از بهترین و تازه‌ترین مواد اولیه در تهیه تمام غذاها</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">👨‍🍳</span>
+                    <h4>سرآشپزهای ماهر</h4>
+                    <p>تیم حرفه‌ای با سال‌ها تجربه در هنر آشپزی و طبخ غذاهای متنوع</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🚀</span>
+                    <h4>سرو سریع</h4>
+                    <p>آماده‌سازی و تحویل غذا در کوتاه‌ترین زمان ممکن</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>قیمت مناسب</h4>
+                    <p>کیفیت عالی با قیمت‌های معقول و منصفانه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🧹</span>
+                    <h4>بهداشت کامل</h4>
+                    <p>رعایت کامل اصول بهداشتی در تمام مراحل آماده‌سازی و سرو غذا</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💚</span>
+                    <h4>رضایت مشتری</h4>
+                    <p>رضایت شما مهم‌ترین هدف ماست و برای آن از هیچ تلاشی دریغ نمی‌کنیم</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== تیم ما (بدون آواتار) ===== -->
+    <section class="container team-section">
+        <div class="section-title">
+            <h2>👨‍🍳 تیم <span style="color: #c0392b;">ما</span></h2>
+            <p>افرادی که با عشق غذا درست می‌کنند</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-member">
+                <span class="emoji-avatar">👨‍🍳</span>
+                <h4>جواد جعفریان</h4>
+                <span class="role">سرآشپز و بنیانگذار</span>
+                <p>با بیش از ۱۵ سال تجربه در آشپزی، خالق طعم‌های بی‌نظیر</p>
+            </div>
+            <div class="team-member">
+                <span class="emoji-avatar">👨‍🍳</span>
+                <h4>رضا کریمی</h4>
+                <span class="role">سرآشپز اجرایی</span>
+                <p>متخصص در غذاهای ایرانی و سنتی با طعمی اصیل</p>
+            </div>
+            <div class="team-member">
+                <span class="emoji-avatar">👩‍🍳</span>
+                <h4>سارا محمدی</h4>
+                <span class="role">شیرینی‌پز</span>
+                <p>خالق دسرها و شیرینی‌های خوشمزه و مجلسی</p>
+            </div>
+            <div class="team-member">
+                <span class="emoji-avatar">👨‍💼</span>
+                <h4>احمد نوری</h4>
+                <span class="role">مدیر رستوران</span>
+                <p>مدیریت و هماهنگی تیم برای ارائه بهترین خدمات</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== بخش تماس ===== -->
+    <section class="container">
+        <div class="contact-section">
+            <h3>با ما <span>تماس</span> بگیرید</h3>
+            <p>
+                ما همیشه خوشحال می‌شویم که صدای شما را بشنویم. برای رزرو، سفارش و یا هر سوالی،
+                با ما در ارتباط باشید.
+            </p>
+            {% comment %} <a href="/contact-us/" class="btn">
+                <i class="fa fa-phone"></i> تماس با ما
+            </a> {% endcomment %}
+        </div>
+    </section>
+{% endblock content %}

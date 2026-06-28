@@ -1,6 +1,6 @@
-from django.views.generic import ListView,DetailView
-from .models import Food,FoodType,ContactUs,Order
-
+from django.views.generic import ListView,DetailView,TemplateView,FormView
+from .models import Food,ContactUs,Order
+from .forms import ContactUsForm
 
 
 class Home(ListView):
@@ -12,6 +12,9 @@ class Detail(DetailView):
     model = Food
     template_name = 'detail.html'
     context_object_name = 'food'   
+
+class AboutUs(TemplateView):
+    template_name = 'about_us.html'
 
 class Breakfast(Home):
     queryset = Food.objects.filter(food_types__title='صبحانه')
@@ -42,6 +45,18 @@ class Detail(DetailView):
     template_name = 'detail.html'
     context_object_name = 'food'   
 
+  
+class ContactUsView(FormView):
+    template_name = 'contact_us.html'
+    form_class = ContactUsForm
+    success_url = '/contact-us-sent/'       
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form) 
+
+class Contact_us_sent(TemplateView):
+    template_name = 'contact_us_sent.html'      
 
    
 
