@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.urls import reverse
 
 
 class FoodType(models.Model):
@@ -22,6 +23,10 @@ class Food(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.price} Tooman"
+    
+    def get_absolute_url(self):
+        return reverse("detail", kwargs={"pk": self.pk})
+    
     
 class ContactUs(models.Model):
     name = models.CharField(max_length=50, blank=True) 

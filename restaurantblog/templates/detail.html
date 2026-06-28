@@ -1,35 +1,425 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load madval_persian_translation %}
 
-{% block title %}جزئیات غذا - رستوران جواد{% endblock title %}
+{% block title %}جزئیات {{ food.name|pn }} - رستوران جواد{% endblock title %}
+
+{% block extra_css %}
+<style>
+    .detail-page .hero-card {
+        transition: all 0.4s ease;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .detail-page .hero-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+    
+    .detail-page .hero-card img {
+        transition: transform 0.6s ease;
+    }
+    
+    .detail-page .hero-card:hover img {
+        transform: scale(1.03);
+    }
+    
+    .detail-page .price-box {
+        background: linear-gradient(135deg, #f8f4e8, #fcf9f5);
+        padding: 25px;
+        border-radius: 16px;
+        text-align: center;
+        margin: 20px 0;
+        border: 2px dashed #c0392b;
+        transition: all 0.3s ease;
+    }
+    
+    .detail-page .price-box:hover {
+        border-color: #f1c40f;
+        transform: scale(1.02);
+    }
+    
+    .detail-page .price-number {
+        font-size: 2.8rem;
+        color: #c0392b;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+    
+    .detail-page .price-currency {
+        font-size: 1.1rem;
+        color: #7a5f4b;
+        margin-right: 5px;
+        font-weight: 600;
+    }
+    
+    .detail-page .feature-list li {
+        padding: 10px 0;
+        border-bottom: 1px solid #f0ede8;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .detail-page .feature-list li:hover {
+        padding-right: 10px;
+        background: rgba(192, 57, 43, 0.04);
+        border-radius: 8px;
+    }
+    
+    .detail-page .feature-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .detail-page .feature-list i {
+        font-size: 1.3rem;
+        width: 30px;
+        text-align: center;
+    }
+    
+    .detail-page .btn-order {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        color: #fff;
+        padding: 15px 35px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 700;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        box-shadow: 0 8px 25px rgba(192, 57, 43, 0.3);
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .detail-page .btn-order:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 35px rgba(192, 57, 43, 0.4);
+        color: #fff;
+    }
+    
+    .detail-page .btn-menu {
+        background: transparent;
+        color: #2d1b0e;
+        padding: 15px 30px;
+        border-radius: 50px;
+        border: 2px solid #2d1b0e;
+        font-weight: 700;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .detail-page .btn-menu:hover {
+        background: #2d1b0e;
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(45, 27, 14, 0.2);
+    }
+    
+    .detail-page .share-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding-top: 25px;
+        margin-top: 25px;
+        border-top: 2px solid #f0ede8;
+    }
+    
+    .detail-page .share-section span {
+        font-size: 0.95rem;
+        color: #7a5f4b;
+        font-weight: 600;
+    }
+    
+    .detail-page .share-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #f8f4e8;
+        color: #2d1b0e;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .detail-page .share-link:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .detail-page .share-link.telegram:hover {
+        background: #0088cc;
+        color: #fff;
+    }
+    
+    .detail-page .share-link.whatsapp:hover {
+        background: #25D366;
+        color: #fff;
+    }
+    
+    .detail-page .share-link.instagram:hover {
+        background: radial-gradient(circle at 30% 110%, #fdf497, #fd5949, #d6249f, #285AEB);
+        color: #fff;
+    }
+    
+    .detail-page .meta-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f8f4e8;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: #5a3f2b;
+        transition: all 0.3s ease;
+    }
+    
+    .detail-page .meta-badge:hover {
+        background: #2d1b0e;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+    
+    .detail-page .meta-badge i {
+        color: #c0392b;
+    }
+    
+    .detail-page .meta-badge:hover i {
+        color: #f1c40f;
+    }
+    
+    .detail-page .section-title h3 {
+        font-size: 2.2rem;
+        color: #2d1b0e;
+        position: relative;
+    }
+    
+    .detail-page .section-title h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #c0392b, #f1c40f);
+        border-radius: 2px;
+    }
+    
+    .detail-page .food-description {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: #5a3f2b;
+        margin-top: 10px;
+    }
+    
+    .detail-page .badge-special {
+        background: linear-gradient(135deg, #f1c40f, #f39c12);
+        color: #2d1b0e;
+        padding: 4px 16px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    
+    .detail-page .old-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 1.1rem;
+    }
+    
+    .detail-page .discount-badge {
+        background: #f1c40f;
+        color: #2d1b0e;
+        padding: 2px 12px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    @media (max-width: 768px) {
+        .detail-page .price-number {
+            font-size: 2.2rem;
+        }
+        .detail-page .btn-order,
+        .detail-page .btn-menu {
+            font-size: 0.95rem;
+            padding: 12px 20px;
+        }
+        .detail-page .section-title h3 {
+            font-size: 1.8rem;
+        }
+        .detail-page .hero-actions {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock extra_css %}
 
 {% block content %}
-<section class="page-section container">
+<section class="page-section container detail-page">
     <div class="section-title">
-        <h3>جزییات غذا</h3>
-        <span>پیتزا املت و نعنا</span>
+        <h3>✨ جزئیات غذا</h3>
+        <span style="font-size: 1.2rem; color: #7a5f4b; font-weight: 500;">
+            {{ food.name|pn }}
+        </span>
     </div>
+
     <div class="grid-two">
+        <!-- ===== بخش تصویر ===== -->
         <article class="hero-card">
-            <img src="{% static 'imgs/pizza/2.jpg' %}" alt="پیتزا املت و نعنا" />
+            <img src="{% if food.image %}{{ food.image.url }}{% else %}{% static 'imgs/default.jpg' %}{% endif %}" 
+                 alt="{{ food.name|pn }}" />
             <div class="hero-card-body">
-                <h3>پیتزای اختصاصی جواد</h3>
-                <p>ترکیبی از پنیرهای خوش‌طعم، املت تازه، نعنا و سس مخصوص. پیتزایی با بافت ترد و عطر بی‌نظیر.</p>
+                <h3 style="font-size: 1.8rem; color: #2d1b0e;">
+                    {{ food.name|pn }}
+                </h3>
+                
+                <p class="food-description">
+                    {{ food.description|default:"✨ توضیحاتی برای این غذا ثبت نشده است."|pn }}
+                </p>
+                
+                {% if food.is_special %}
+                <span class="badge-special">
+                    <i class="fa fa-star"></i> ویژه سرآشپز
+                </span>
+                {% endif %}
+                
+                <!-- متا اطلاعات -->
+                <div style="display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap;">
+                    {% if food.weight %}
+                    <span class="meta-badge">
+                        <i class="fa fa-weight-hanging"></i> {{ food.weight|pn }} گرم
+                    </span>
+                    {% endif %}
+                    
+                    {% if food.length %}
+                    <span class="meta-badge">
+                        <i class="fa fa-clock-o"></i> {{ food.length|pn }} دقیقه
+                    </span>
+                    {% endif %}
+                    
+                    {% if food.category %}
+                    <span class="meta-badge">
+                        <i class="fa fa-tag"></i> {{ food.category|pn }}
+                    </span>
+                    {% endif %}
+                    
+                    {% if food.calories %}
+                    <span class="meta-badge">
+                        <i class="fa fa-fire"></i> {{ food.calories|pn }} کالری
+                    </span>
+                    {% endif %}
+                </div>
             </div>
         </article>
+
+        <!-- ===== بخش اطلاعات ===== -->
         <div class="section-block">
-            <h4>ویژگی‌ها</h4>
-            <ul class="list-with-icons">
-                <li>پیتزا با نان دست‌ساز</li>
-                <li>کاهش چربی و طعم تازه</li>
-                <li>مناسب برای سفارش خانوادگی</li>
-                <li>ارسال سریع و بسته‌بندی شیک</li>
+            <h4 style="font-size: 1.4rem; color: #2d1b0e; margin-bottom: 15px;">
+                🌟 ویژگی‌های {{ food.name|pn }}
+            </h4>
+            
+            <ul class="feature-list" style="list-style: none; padding: 0; margin: 0;">
+                <li>
+                    <i class="fa fa-check-circle" style="color: #27ae60;"></i>
+                    <span>مواد اولیه تازه و مرغوب</span>
+                </li>
+                <li>
+                    <i class="fa fa-check-circle" style="color: #27ae60;"></i>
+                    <span>طبخ با بهترین ادویه‌های طبیعی</span>
+                </li>
+                <li>
+                    <i class="fa fa-check-circle" style="color: #27ae60;"></i>
+                    <span>بسته‌بندی بهداشتی و شکیل</span>
+                </li>
+                <li>
+                    <i class="fa fa-check-circle" style="color: #27ae60;"></i>
+                    <span>تحویل سریع و دمای مناسب</span>
+                </li>
+                <li>
+                    <i class="fa fa-check-circle" style="color: #27ae60;"></i>
+                    <span>مناسب برای مهمانی‌های خانوادگی</span>
+                </li>
             </ul>
-            <div class="price">112000 تومان</div>
-            <div class="hero-actions" style="margin-top: 22px;">
-                <a href="order.html" class="btn btn-primary"><i class="fa fa-check-circle"></i> سفارش این غذا</a>
-                <a href="persian.html" class="button-link btn-secondary"><i class="fa fa-angle-right"></i> بازگشت به منو</a>
+
+            <!-- ===== قیمت ===== -->
+            <div class="price-box">
+                <span style="display: block; font-size: 0.95rem; color: #7a5f4b; margin-bottom: 5px;">
+                    💰 قیمت
+                </span>
+                <span class="price-number">
+                    {{ food.price|default:"تماس بگیرید"|cspn }}
+                </span>
+                <span class="price-currency">تومان</span>
+                
+                {% if food.old_price %}
+                <div style="margin-top: 8px;">
+                    <span class="old-price">
+                        {{ food.old_price|cspn }} تومان
+                    </span>
+                    <span class="discount-badge">
+                        {{ food.discount_percent|default:"۲۰"|pn }}٪ تخفیف
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- ===== دکمه‌ها ===== -->
+            <div class="hero-actions" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                <a href="#" class="btn-order">
+                    <i class="fa fa-shopping-basket"></i> سفارش این غذا
+                </a>
+                <a href="{% url 'home' %}" class="btn-menu">
+                    <i class="fa fa-arrow-right"></i> بازگشت به منو
+                </a>
+            </div>
+
+            <!-- ===== اشتراک‌گذاری ===== -->
+            <div class="share-section">
+                <span>📤 اشتراک‌گذاری</span>
+                <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ food.name|pn }} - رستوران جواد" 
+                   target="_blank" class="share-link telegram">
+                    <i class="fa fa-telegram"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?text={{ food.name|pn }} - {{ request.build_absolute_uri }}" 
+                   target="_blank" class="share-link whatsapp">
+                    <i class="fa fa-whatsapp"></i>
+                </a>
+                <a href="#" class="share-link instagram">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a href="#" class="share-link" onclick="copyLink()" style="background: #f8f4e8;">
+                    <i class="fa fa-link"></i>
+                </a>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    alert('✅ لینک کپی شد!');
+}
+</script>
 {% endblock content %}
