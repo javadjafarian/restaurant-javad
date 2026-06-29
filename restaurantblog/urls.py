@@ -13,5 +13,6 @@ urlpatterns = [
     path('about-us/', views.AboutUs.as_view(), name='about-us'),
     path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
     path('contact-us-sent/', views.Contact_us_sent.as_view(), name='contact-us-sent'),
-    # path('order/', views.OrderView.as_view(), name='order'),
+    path('order/<int:pk>/', views.OrderView.as_view(), name='order'),  
+    path('order-success/', views.OrderSuccessView.as_view(), name='order-success'),
 ]

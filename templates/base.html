@@ -348,21 +348,37 @@
                 </button>
 
                 <nav class="main-nav" id="mainNav">
-                    <ul>
-                        <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">خانه</a></li>
-                        <li><a href={% url "breakfast" %} class="{% if request.path == '/breakfast/' %}active{% endif %}">صبحانه</a></li>
-                        <li><a href={% url "lunch" %} class="{% if request.path == '/lunch/' %}active{% endif %}">ناهار</a></li>
-                        <li><a href={% url "dinner" %} class="{% if request.path == '/dinner/' %}active{% endif %}">شام</a></li>
-                        <li><a href={% url "fastfood" %} class="{% if request.path == '/fastfood/' %}active{% endif %}">فست‌فود</a></li>
-                        <li><a href={% url "persianfood" %} class="{% if request.path == '/persianfood/' %}active{% endif %}">ایرانی</a></li>
-                        <li><a href={% url "drinks" %} class="{% if request.path == '/drinks/' %}active{% endif %}">نوشیدنی</a></li>
-                        <li><a href={% url "about-us" %} class="{% if request.path == '/about-us/' %}active{% endif %}">درباره ما</a></li>
-                        <li><a href={% url "contact-us" %} class="{% if request.path == '/contact-us/' %}active{% endif %}">تماس با ما</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
+<!-- منوی اصلی -->
+<nav class="main-nav" id="mainNav">
+    <ul>
+        <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">خانه</a></li>
+        <li><a href="/breakfast/" class="{% if request.path == '/breakfast/' %}active{% endif %}">صبحانه</a></li>
+        <li><a href="/lunch/" class="{% if request.path == '/lunch/' %}active{% endif %}">ناهار</a></li>
+        <li><a href="/dinner/" class="{% if request.path == '/dinner/' %}active{% endif %}">شام</a></li>
+        <li><a href="/fastfood/" class="{% if request.path == '/fastfood/' %}active{% endif %}">فست‌فود</a></li>
+        <li><a href="/persianfood/" class="{% if request.path == '/persianfood/' %}active{% endif %}">ایرانی</a></li>
+        <li><a href="/drinks/" class="{% if request.path == '/drinks/' %}active{% endif %}">نوشیدنی</a></li>
+        <li><a href="/about-us/" class="{% if request.path == '/about-us/' %}active{% endif %}">درباره ما</a></li>
+        <li><a href="/contact-us/" class="{% if request.path == '/contact-us/' %}active{% endif %}">تماس با ما</a></li>
+        
+        <!-- ===== منوی کاربر ===== -->
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'accounts:profile' %}" class="{% if request.path == '/accounts/profile/' %}active{% endif %}">
+                <i class="fa fa-user"></i> {{ user.username }}
+            </a></li>
+           <li><a href="{% url 'accounts:logout' %}">
+    <i class="fa fa-sign-out"></i> خروج
+</a></li
+        {% else %}
+            <li><a href="{% url 'accounts:login' %}" class="{% if request.path == '/accounts/login/' %}active{% endif %}">
+                <i class="fa fa-sign-in"></i> ورود
+            </a></li>
+            <li><a href="{% url 'accounts:register' %}" class="{% if request.path == '/accounts/register/' %}active{% endif %}">
+                <i class="fa fa-user-plus"></i> ثبت‌نام
+            </a></li>
+        {% endif %}
+    </ul>
+</nav>
         <!-- محتوای اصلی -->
         <main>
             {% block content %}{% endblock content %}

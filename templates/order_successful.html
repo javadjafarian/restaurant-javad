@@ -1,87 +1,372 @@
-<!DOCTYPE html>
-<html lang="fa">
+{% extends 'base.html' %}
+{% load static %}
+{% load madval_persian_translation %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ثبت سفارش موفق - رستوران جواد</title>
-    <link rel="icon" type="image/x-icon" href="imgs/logo/logo.ico" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/index.css" />
-</head>
+{% block title %}
+    سفارش ثبت شد - رستوران جواد
+{% endblock title %}
 
-<body id="top">
-    <div class="page-shell">
-        <div class="topbar container">
-            <span>🍽️ تجربه‌ای تازه از غذای ایرانی و جهانی</span>
-            <span>⏰ سفارش آنلاین، آماده‌سازی سریع، تحویل رایگان</span>
+{% block extra_css %}
+    <style>
+        .success-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        
+        .success-box {
+            background: #fff;
+            padding: 60px 50px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid #f0ede8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .success-box::before {
+            content: '🎉';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.04;
+            top: -60px;
+            right: -60px;
+            transform: rotate(15deg);
+        }
+        
+        .success-box::after {
+            content: '✅';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.04;
+            bottom: -40px;
+            left: -40px;
+            transform: rotate(-10deg);
+        }
+        
+        .success-box .icon-wrapper {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.3);
+        }
+        
+        .success-box .icon-wrapper i {
+            font-size: 4rem;
+            color: #fff;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 25px rgba(39, 174, 96, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+            }
+        }
+        
+        .success-box h2 {
+            color: #2d1b0e;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box h2 span {
+            color: #27ae60;
+        }
+        
+        .success-box .subtitle {
+            color: #7a5f4b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #27ae60, #f1c40f);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .order-id {
+            background: linear-gradient(135deg, #f8f4e8, #fcf9f5);
+            padding: 18px 25px;
+            border-radius: 15px;
+            margin: 15px 0 20px;
+            font-size: 1.2rem;
+            border: 2px dashed #c0392b;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .success-box .order-id .label {
+            color: #7a5f4b;
+            font-weight: 600;
+        }
+        
+        .success-box .order-id .number {
+            color: #c0392b;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        
+        .success-box .message {
+            color: #5a3f2b;
+            font-size: 1.05rem;
+            line-height: 2;
+            margin: 15px 0 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .message strong {
+            color: #c0392b;
+        }
+        
+        .success-box .info-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-box .info-item {
+            background: #f8f4e8;
+            padding: 18px 12px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .success-box .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .success-box .info-item i {
+            font-size: 1.8rem;
+            color: #c0392b;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .success-box .info-item .value {
+            color: #2d1b0e;
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        .success-box .info-item .label {
+            color: #7a5f4b;
+            font-size: 0.8rem;
+        }
+        
+        .success-box .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            margin-top: 5px;
+        }
+        
+        .success-box .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            min-width: 160px;
+            justify-content: center;
+        }
+        
+        .success-box .btn-primary {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.3);
+        }
+        
+        .success-box .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.4);
+        }
+        
+        .success-box .btn-secondary {
+            background: #f8f4e8;
+            color: #2d1b0e;
+            border: 2px solid #e0d5c8;
+        }
+        
+        .success-box .btn-secondary:hover {
+            background: #2d1b0e;
+            color: #fff;
+            border-color: #2d1b0e;
+            transform: translateY(-3px);
+        }
+        
+        .success-box .btn-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+        }
+        
+        .success-box .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .success-box {
+                padding: 40px 25px;
+            }
+            .success-box h2 {
+                font-size: 2rem;
+            }
+            .success-box .icon-wrapper {
+                width: 90px;
+                height: 90px;
+            }
+            .success-box .icon-wrapper i {
+                font-size: 3rem;
+            }
+            .success-box .info-items {
+                grid-template-columns: 1fr 1fr;
+            }
+            .success-box .order-id {
+                font-size: 1rem;
+                padding: 15px;
+            }
+            .success-box .order-id .number {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .success-box {
+                padding: 30px 20px;
+            }
+            .success-box h2 {
+                font-size: 1.6rem;
+            }
+            .success-box .subtitle {
+                font-size: 0.95rem;
+            }
+            .success-box .info-items {
+                grid-template-columns: 1fr;
+            }
+            .success-box .btn-group {
+                flex-direction: column;
+            }
+            .success-box .btn {
+                min-width: unset;
+                width: 100%;
+            }
+            .success-box .order-id {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <section class="container">
+        <div class="success-page">
+            <div class="success-box">
+                <!-- آیکون -->
+                <div class="icon-wrapper">
+                    <i class="fa fa-check"></i>
+                </div>
+                
+                <!-- عنوان -->
+                <h2>سفارش شما <span>ثبت شد!</span></h2>
+                <p class="subtitle">✅ با موفقیت دریافت شد</p>
+                
+                <div class="divider"></div>
+                
+                <!-- شماره سفارش -->
+                <div class="order-id">
+                    <span class="label">🆔 شماره سفارش:</span>
+                    <span class="number">{{ order.id|pn }}</span>
+                </div>
+                
+                <!-- پیام -->
+                <p class="message">
+                    از شما متشکریم که <strong>رستوران جواد</strong> رو انتخاب کردید.
+                    سفارش شما با موفقیت ثبت شد و در اسرع وقت (حداکثر ۳۰ دقیقه)
+                    با شما تماس گرفته خواهد شد.
+                </p>
+                
+                <!-- اطلاعات سفارش -->
+                <div class="info-items">
+                    <div class="info-item">
+                        <i class="fa fa-clock-o"></i>
+                        <span class="value">۴۵ دقیقه</span>
+                        <span class="label">زمان تحویل</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa fa-phone"></i>
+                        <span class="value">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                        <span class="label">تماس با ما</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="value">در انتظار تایید</span>
+                        <span class="label">وضعیت سفارش</span>
+                    </div>
+                </div>
+                
+                
+                <div class="btn-group">
+                    <a href="{% url 'home' %}" class="btn btn-primary">
+                        <i class="fa fa-home"></i> بازگشت به خانه
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">
+                        <i class="fa fa-utensils"></i> مشاهده منو
+                    </a>
+                </div>
+            </div>
         </div>
-        <header class="site-header container">
-            <div class="site-brand">
-                <img src="imgs/logo/logo.ico" alt="لوگو رستوران" />
-                <h1>رستوران جواد</h1>
-            </div>
-            <nav class="main-nav container">
-                <ul>
-                    <li><a href="index.html">خانه</a></li>
-                    <li><a href="breakfast.html">صبحانه</a></li>
-                    <li><a href="lunch.html">ناهار</a></li>
-                    <li><a href="dinner.html">شام</a></li>
-                    <li><a href="fast_food.html">فست‌فود</a></li>
-                    <li><a href="persian.html">ایرانی</a></li>
-                    <li><a href="drinks.html">نوشیدنی</a></li>
-                    <li><a href="about_us.html">درباره ما</a></li>
-                    <li><a href="contact_us.html">تماس با ما</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <section class="page-section container">
-            <div class="section-block">
-                <h3>سفارش شما با موفقیت ثبت شد</h3>
-                <p>متشکریم! سفارش شما ثبت شده و به زودی در حال آماده‌سازی است. پشتیبانی ما تا تکمیل سفارش همراه شما
-                    خواهد بود.</p>
-                <div class="hero-actions" style="margin-top: 18px;">
-                    <a href="index.html" class="btn btn-primary"><i class="fa fa-home"></i> بازگشت به خانه</a>
-                    <a href="contact_us.html" class="button-link btn-secondary"><i class="fa fa-phone"></i> تماس با
-                        پشتیبانی</a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="site-footer container">
-            <div class="footer-grid">
-                <div>
-                    <h4>رستوران جواد - طعم نو، خاطره قدیمی</h4>
-                    <p>سفره‌ای از غذاهای سنتی و نوآورانه برای مهمانان عزیز. هر پرس یک تجربه جدید، هر لقمه یک تاریخچه
-                        خوشمزه.</p>
-                    <div class="footer-links">
-                        <a href="breakfast.html">صبحانه</a>
-                        <a href="lunch.html">ناهار</a>
-                        <a href="dinner.html">شام</a>
-                        <a href="fast_food.html">فست‌فود</a>
-                        <a href="persian.html">ایرانی</a>
-                        <a href="drinks.html">نوشیدنی</a>
-                    </div>
-                </div>
-                <div>
-                    <h4>ارتباط با ما</h4>
-                    <p>✉️ jawad.jafarian@gmail.com</p>
-                    <div class="social-icons">
-                        <a href="#"><img src="imgs/soicial media/instagram.png" alt="اینستاگرام" /></a>
-                        <a href="#"><img src="imgs/soicial media/telegram.png" alt="تلگرام" /></a>
-                        <a href="#"><img src="imgs/soicial media/youtube.png" alt="یوتیوب" /></a>
-                        <a href="#"><img src="imgs/soicial media/facebook.png" alt="فیسبوک" /></a>
-                    </div>
-                </div>
-            </div>
-            <div class="note-box">
-                <p>تمامی صفحات با طراحی جدید اجرا شده‌اند تا تجربه‌ای زیبا و ساده برای مشتریان شما فراهم شود.</p>
-            </div>
-        </footer>
-        <a class="back-to-top" href="#top"><i class="fa fa-arrow-up"></i></a>
-
-    </div>
-</body>
-
-</html>
+    </section>
+{% endblock content %}

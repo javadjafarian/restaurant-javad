@@ -1,103 +1,416 @@
-<!DOCTYPE html>
-<html lang="fa">
+{% extends 'base.html' %}
+{% load static %}
+{% load madval_persian_translation %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>سفارش آنلاین - رستوران جواد</title>
-    <link rel="icon" type="image/x-icon" href="imgs/logo/logo.ico" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/index.css" />
-</head>
+{% block title %}
+    سفارش غذا - رستوران جواد
+{% endblock title %}
 
-<body id="top">
-    <div class="page-shell">
-        <div class="topbar container">
-            <span>🍽️ تجربه‌ای تازه از غذای ایرانی و جهانی</span>
-            <span>⏰ سفارش آنلاین، آماده‌سازی سریع، تحویل رایگان</span>
+{% block extra_css %}
+    <style>
+        .order-hero {
+            background: linear-gradient(135deg, #2d1b0e, #4a2c1a);
+            padding: 50px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .order-hero::before {
+            content: '🛒';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.05;
+            left: -30px;
+            bottom: -30px;
+            transform: rotate(-15deg);
+        }
+        
+        .order-hero::after {
+            content: '🍽️';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.05;
+            right: -20px;
+            top: -20px;
+            transform: rotate(15deg);
+        }
+        
+        .order-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-hero h1 span {
+            color: #f1c40f;
+        }
+        
+        .order-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+            align-items: start;
+        }
+        
+        .order-form-wrapper {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid #f0ede8;
+        }
+        
+        .order-form-wrapper h3 {
+            color: #2d1b0e;
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+        
+        .order-form-wrapper h3 span {
+            color: #c0392b;
+        }
+        
+        .order-form-wrapper .subtitle {
+            color: #7a5f4b;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #2d1b0e;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group label .required {
+            color: #c0392b;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #f0ede8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fcf9f5;
+            font-family: inherit;
+            direction: rtl;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #c0392b;
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.1);
+            background: #fff;
+        }
+        
+        .form-control.error {
+            border-color: #e74c3c;
+        }
+        
+        .form-error {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: #fff;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(192, 57, 43, 0.3);
+        }
+        
+        .order-info {
+            background: #f8f4e8;
+            padding: 40px;
+            border-radius: 20px;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .order-info h3 {
+            color: #2d1b0e;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+        
+        .order-info h3 span {
+            color: #c0392b;
+        }
+        
+        .order-info .food-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0d5c8;
+            align-items: center;
+        }
+        
+        .order-info .food-item:last-child {
+            border-bottom: none;
+        }
+        
+        .order-info .food-item .food-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .order-info .food-item .food-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-info .food-item .food-details {
+            flex: 1;
+        }
+        
+        .order-info .food-item .food-details h4 {
+            color: #2d1b0e;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        
+        .order-info .food-item .food-details .price {
+            color: #c0392b;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        
+        .order-info .total {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-top: 2px solid #2d1b0e;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d1b0e;
+        }
+        
+        .order-info .total span:last-child {
+            color: #c0392b;
+            font-size: 1.4rem;
+        }
+        
+        .order-info .features {
+            margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .order-info .features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: #7a5f4b;
+            font-size: 0.9rem;
+        }
+        
+        .order-info .features li i {
+            color: #27ae60;
+            font-size: 1.1rem;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .order-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .order-info {
+                position: static;
+            }
+            .order-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .order-hero h1 {
+                font-size: 2rem;
+            }
+            .order-hero p {
+                font-size: 1rem;
+            }
+            .order-form-wrapper {
+                padding: 25px;
+            }
+            .order-info {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .order-hero h1 {
+                font-size: 1.6rem;
+            }
+            .order-info .food-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .order-info .food-item .food-img {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <section class="order-hero">
+        <div class="container">
+            <h1>🛒 سفارش <span>غذا</span></h1>
+            <p>
+                فرم زیر را پر کنید تا سفارش شما ثبت شود. پس از تایید، با شما تماس خواهیم گرفت.
+            </p>
         </div>
-        <header class="site-header container">
-            <div class="site-brand">
-                <img src="imgs/logo/logo.ico" alt="لوگو رستوران" />
-                <h1>رستوران جواد</h1>
+    </section>
+
+    <section class="container">
+        <div class="order-wrapper">
+            <div class="order-form-wrapper">
+                <h3>📝 ثبت <span>سفارش</span></h3>
+                <p class="subtitle">اطلاعات خود را وارد کنید تا سفارش شما ثبت شود.</p>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="success-message">
+                            <i class="fa fa-check-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">
+                            نام و نام خانوادگی <span class="required">*</span>
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <span class="form-error">{{ form.name.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.phone_number.id_for_label }}">
+                            شماره تماس <span class="required">*</span>
+                        </label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <span class="form-error">{{ form.phone_number.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">
+                            ایمیل
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <span class="form-error">{{ form.email.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.amount.id_for_label }}">
+                            تعداد <span class="required">*</span>
+                        </label>
+                        {{ form.amount }}
+                        {% if form.amount.errors %}
+                            <span class="form-error">{{ form.amount.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        <i class="fa fa-check-circle"></i> ثبت سفارش
+                    </button>
+                </form>
             </div>
-            <nav class="main-nav container">
-                <ul>
-                    <li><a href="index.html">خانه</a></li>
-                    <li><a href="breakfast.html">صبحانه</a></li>
-                    <li><a href="lunch.html">ناهار</a></li>
-                    <li><a href="dinner.html">شام</a></li>
-                    <li><a href="fast_food.html">فست‌فود</a></li>
-                    <li><a href="persian.html">ایرانی</a></li>
-                    <li><a href="drinks.html">نوشیدنی</a></li>
-                    <li><a href="about_us.html">درباره ما</a></li>
-                    <li><a href="contact_us.html">تماس با ما</a></li>
+
+            <div class="order-info">
+                <h3>🍽️ <span>جزئیات</span> سفارش</h3>
+                
+                <div class="food-item">
+                    <div class="food-img">
+                        {% if food.image %}
+                            <img src="{{ food.image.url }}" alt="{{ food.name }}" />
+                        {% else %}
+                            <img src="{% static 'imgs/default.jpg' %}" alt="{{ food.name }}" />
+                        {% endif %}
+                    </div>
+                    <div class="food-details">
+                        <h4>{{ food.name|pn }}</h4>
+                        <span class="price">{{ food.price|cspn }} تومان</span>
+                    </div>
+                </div>
+                
+                <div class="total">
+                    <span>💰 مبلغ قابل پرداخت</span>
+                    <span>{{ food.price|cspn }} تومان</span>
+                </div>
+                
+                <ul class="features">
+                    <li><i class="fa fa-check-circle"></i> ارسال رایگان برای سفارش‌های بالای ۱۰۰ هزار تومان</li>
+                    <li><i class="fa fa-check-circle"></i> آماده‌سازی سریع و بسته‌بندی بهداشتی</li>
+                    <li><i class="fa fa-check-circle"></i> پشتیبانی ۲۴ ساعته</li>
+                    <li><i class="fa fa-check-circle"></i> امکان لغو سفارش تا ۳۰ دقیقه قبل</li>
                 </ul>
-            </nav>
-        </header>
-
-        <section class="page-section container">
-            <div class="section-title">
-                <h3>صفحه سفارش</h3>
-                <span>یک سفارش سریع و امن ثبت کنید</span>
             </div>
-            <div class="grid-two">
-                <div class="section-block">
-                    <h4>پیتزا املت و نعنا</h4>
-                    <p>این پیتزا محبوب‌ترین غذای فست‌فود ماست. طعم تازه املت و نعنا در کنار پنیر ویژه، ترکیبی متفاوت به
-                        شما هدیه می‌دهد.</p>
-                    <ul class="list-with-icons">
-                        <li>زمان آماده‌سازی: حدود 20 دقیقه</li>
-                        <li>بسته‌بندی زیبا و سالم</li>
-                        <li>ارسال سریع در محدوده رستوران</li>
-                    </ul>
-                </div>
-                <div class="section-block">
-                    <h4>فرم سفارش</h4>
-                    <form action="order_successful.html" class="contact-form">
-                        <input type="text" name="name" placeholder="نام و نام خانوادگی" required />
-                        <input type="tel" name="phone" placeholder="شماره تماس" required />
-                        <input type="email" name="email" placeholder="ایمیل" />
-                        <input type="number" name="count" min="1" max="10" value="1" required />
-                        <input type="submit" class="btn btn-primary" value="ثبت سفارش" />
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <footer class="site-footer container">
-            <div class="footer-grid">
-                <div>
-                    <h4>رستوران جواد - طعم نو، خاطره قدیمی</h4>
-                    <p>سفره‌ای از غذاهای سنتی و نوآورانه برای مهمانان عزیز. هر پرس یک تجربه جدید، هر لقمه یک تاریخچه
-                        خوشمزه.</p>
-                    <div class="footer-links">
-                        <a href="breakfast.html">صبحانه</a>
-                        <a href="lunch.html">ناهار</a>
-                        <a href="dinner.html">شام</a>
-                        <a href="fast_food.html">فست‌فود</a>
-                        <a href="persian.html">ایرانی</a>
-                        <a href="drinks.html">نوشیدنی</a>
-                    </div>
-                </div>
-                <div>
-                    <h4>ارتباط با ما</h4>
-                    <p>✉️ jawad.jafarian@gmail.com</p>
-                    <div class="social-icons">
-                        <a href="#"><img src="imgs/soicial media/instagram.png" alt="اینستاگرام" /></a>
-                        <a href="#"><img src="imgs/soicial media/telegram.png" alt="تلگرام" /></a>
-                        <a href="#"><img src="imgs/soicial media/youtube.png" alt="یوتیوب" /></a>
-                        <a href="#"><img src="imgs/soicial media/facebook.png" alt="فیسبوک" /></a>
-                    </div>
-                </div>
-            </div>
-            <div class="note-box">
-                <p>تمامی صفحات با طراحی جدید اجرا شده‌اند تا تجربه‌ای زیبا و ساده برای مشتریان شما فراهم شود.</p>
-            </div>
-        </footer>
-        <a class="back-to-top" href="#top"><i class="fa fa-arrow-up"></i></a>
-
-    </div>
-</body>
-
-</html>
+        </div>
+    </section>
+{% endblock content %}

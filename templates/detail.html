@@ -386,9 +386,9 @@
 
             <!-- ===== دکمه‌ها ===== -->
             <div class="hero-actions" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-                <a href="#" class="btn-order">
-                    <i class="fa fa-shopping-basket"></i> سفارش این غذا
-                </a>
+                    <a href="{% url 'order' food.pk %}" class="btn-order">
+        <i class="fa fa-shopping-basket"></i> سفارش این غذا
+    </a>
                 <a href="{% url 'home' %}" class="btn-menu">
                     <i class="fa fa-arrow-right"></i> بازگشت به منو
                 </a>

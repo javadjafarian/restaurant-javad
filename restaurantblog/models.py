@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.urls import reverse
+
+User = get_user_model()
 
 
 class FoodType(models.Model):
@@ -31,14 +34,31 @@ class Food(models.Model):
 class ContactUs(models.Model):
     name = models.CharField(max_length=50, blank=True) 
     email = models.EmailField(max_length=254)
-    phone_number =  models.CharField(max_length=11, blank=True)
-    text = models.TextField()  
+    phone_number = models.CharField(max_length=11, blank=True)
+    text = models.TextField()
+    
+    def __str__(self):
+        return f"{self.name} - {self.email}"
+
 
 class Order(models.Model):
+    # ✅ اضافه کردن ارتباط با کاربر
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='orders'
+    )
     name = models.CharField(max_length=50)
-    phone_number =  models.CharField(max_length=11, validators=[MinLengthValidator(11, 'wrong number')])
+    phone_number = models.CharField(max_length=11, validators=[MinLengthValidator(11, 'wrong number')])
     email = models.EmailField(max_length=254, blank=True)
     amount = models.PositiveIntegerField()
-
+    created_at = models.DateTimeField(auto_now_add=True)  # ✅ تاریخ ثبت سفارش
     
-
+    def __str__(self):
+        return f"سفارش #{self.id} - {self.name}"
+    
+    def get_total_price(self):
+        # اینجا می‌تونی قیمت کل رو محاسبه کنی
+        return self.amount * 10000  # مثال

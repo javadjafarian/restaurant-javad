@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    ثبت‌نام - رستوران جواد
+{% endblock title %}
+
+{% block extra_css %}
+    <style>
+        .auth-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        
+        .auth-box {
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid #f0ede8;
+        }
+        
+        .auth-box h2 {
+            text-align: center;
+            color: #2d1b0e;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .auth-box h2 span {
+            color: #c0392b;
+        }
+        
+        .auth-box .subtitle {
+            text-align: center;
+            color: #7a5f4b;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #2d1b0e;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group label .required {
+            color: #c0392b;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #f0ede8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fcf9f5;
+            font-family: inherit;
+            direction: rtl;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #c0392b;
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.1);
+            background: #fff;
+        }
+        
+        .form-error {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .help-text {
+            color: #7a5f4b;
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(192, 57, 43, 0.3);
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+            color: #7a5f4b;
+        }
+        
+        .auth-links a {
+            color: #c0392b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 480px) {
+            .auth-box {
+                padding: 30px 20px;
+            }
+            .auth-box h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <section class="container">
+        <div class="auth-page">
+            <div class="auth-box">
+                <h2>📝 <span>ثبت‌نام</span></h2>
+                <p class="subtitle">ثبت‌نام کنید و از امکانات ویژه استفاده کنید</p>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="success-message">
+                            <i class="fa fa-check-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post", action=''>
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                                {% if field.field.required %}
+                                    <span class="required">*</span>
+                                {% endif %}
+                            </label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <span class="form-error">{{ field.errors|join:", " }}</span>
+                            {% endif %}
+                            {% if field.help_text %}
+                                <span class="help-text">{{ field.help_text }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn-submit">
+                        <i class="fa fa-user-plus"></i> ثبت‌نام
+                    </button>
+                </form>
+                
+                <div class="auth-links">
+                    قبلاً ثبت‌نام کردی؟ <a href="{% url 'accounts:login' %}">وارد شو</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
